@@ -192,14 +192,14 @@
         "ansible.validation.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Toggles the validation provider. If enabled it will run all the validation providers that are individually enabled, for example if 'ansible.validation.lint.enabled' is 'true' it will run ansible-lint but if none of the provider is enabled it runs ansible-playbook --syntax-check to provide basic validations. If disabled there will be no validations done at all.",
+          "description": "Validate Ansible content. By default this option provides basic validation with 'ansible-playbook --syntax-check'. For full validation, enable ansible-lint or another syntax checker.",
           "order": 6
         },
         "ansible.validation.lint.enabled": {
           "scope": "resource",
           "type": "boolean",
           "default": true,
-          "description": "Enable linting with ansible-lint on document open/save.",
+          "description": "Perform full syntax validation of Ansible content.",
           "order": 7
         },
         "ansible.validation.lint.path": {
