@@ -49,3 +49,50 @@ export function convertToSnippetString(suggestion: string): string {
 
   return convertedSuggestion;
 }
+
+export function testingSnippets(suggestion: string): string {
+  const regex = /({{ )(_[a-zA-Z_]\w*_)( }})/gm;
+  const matches = [...suggestion.matchAll(regex)];
+
+  let modifiedSuggestion = suggestion;
+
+  let counter = 0;
+  matches.forEach((matchArray) => {
+    const exactMatch = matchArray[2]; // get only the variable , without the braces
+    counter = counter + 1;
+    modifiedSuggestion = modifiedSuggestion.replace(
+      exactMatch,
+      `\$\{${counter}:${exactMatch}\}`
+      // `$1`
+    ); // replace the exact match in the modified suggestion with tab stop syntax according to vscode snippet srings
+  });
+
+  let newIndentedSuggestion = modifiedSuggestion;
+
+  if ([...matches].length !== 0) {
+    newIndentedSuggestion = testIndendation(modifiedSuggestion);
+  }
+  console.log("New suggestion -> ", newIndentedSuggestion);
+
+  return newIndentedSuggestion;
+}
+
+export function testIndendation(suggestion: string): string {
+  const lines = suggestion.split("\n");
+
+  let newSuggestion = suggestion;
+
+  const newLines: string[] = lines.map((line) => {
+    const spaceCount = line.search(/\S|$/);
+    if (spaceCount > 2) {
+      line = line.trimStart();
+      return " ".repeat(spaceCount - 4) + line;
+    }
+    // console.log("SPACES -> ", spaceCount);
+    return line;
+  });
+
+  newSuggestion = newLines.filter((s) => s).join("\n");
+
+  return newSuggestion;
+}

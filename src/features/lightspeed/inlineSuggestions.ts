@@ -5,6 +5,7 @@ import _ from "lodash";
 import {
   adjustInlineSuggestionIndent,
   convertToSnippetString,
+  testingSnippets,
 } from "../utils/lightspeed";
 import { getCurrentUTCDateTime } from "../utils/dateTime";
 import { lightSpeedManager } from "../../extension";
@@ -215,7 +216,8 @@ export async function getInlineSuggestionItems(
 
     // convert into snippet string to move cursor on jinja variables directly
     const insertTextSnippetString = new vscode.SnippetString(
-      convertToSnippetString(insertText)
+      // convertToSnippetString(insertText)
+      testingSnippets(insertText)
     );
 
     const inlineSuggestionItem = new vscode.InlineCompletionItem(
